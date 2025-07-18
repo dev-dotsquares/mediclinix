@@ -20,14 +20,15 @@ The website is designed for:
 -   Navigation to all major sections of the site.
 -   Direct call-to-action (CTA) buttons for booking appointments.
 -   Sections for About, Services, FAQ, and Contact information.
+-   Subtle animations on section load to improve user experience.
 
 ### 3.2. Service Discovery
--   **Services Section**: A carousel on the homepage provides a high-level overview of all medical services offered.
+-   **Services Section**: A horizontally scrolling carousel on the homepage provides a high-level overview of all medical services offered.
 -   **Detailed Service Pages**: Each service has a dedicated, dynamically-generated page (`/services/[slug]`) containing comprehensive information, including:
     -   Detailed descriptions and taglines.
     -   Key services and conditions treated.
     -   Relevant imagery and icons.
--   Each service page includes a "Book an Appointment" CTA.
+-   Each service page includes a "Book an Appointment" CTA that opens a pre-filled booking modal.
 
 ### 3.3. Doctor's Profile
 -   A dedicated page (`/doctor`) to showcase Dr. Anurag Srivastava's qualifications, experience, and professional philosophy.
@@ -50,14 +51,14 @@ The website is designed for:
 -   **UI Library**: [React](https://react.dev/).
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/) for utility-first styling.
 -   **UI Components**: [ShadCN UI](https://ui.shadcn.com/) for a pre-built, accessible, and customizable component library.
--   **Animations**: `tailwindcss-animate` and `embla-carousel` for smooth transitions and carousels.
--   **Forms**: `react-hook-form` is available but the booking modal uses a standard form with EmailJS.
+-   **Animations**: `tailwindcss-animate` for subtle UI animations.
+-   **Carousels**: `embla-carousel-react` and `embla-carousel-autoplay` for interactive carousels.
 -   **Email Service**: `@emailjs/browser` for handling appointment form submissions.
 -   **Icons**: [Lucide React](https://lucide.dev/) for a consistent icon set.
 
 ## 5. Project Structure
 
-The project follows a standard Next.js App Router structure.
+The project follows a standard Next.js App Router structure. All page content is managed dynamically from `src/lib/content.json`.
 
 ```
 /
@@ -68,7 +69,7 @@ The project follows a standard Next.js App Router structure.
 │   │   │   ├── doctor/page.tsx # Doctor's profile page
 │   │   │   └── services/[slug]/page.tsx # Dynamic service detail pages
 │   │   ├── globals.css         # Global styles and ShadCN theme variables
-│   │   └── layout.tsx          # Root layout
+│   │   └── layout.tsx          # Root layout with SEO metadata
 │   │
 │   ├── components/
 │   │   ├── ui/                 # Core ShadCN UI components (Button, Card, etc.)
@@ -83,7 +84,8 @@ The project follows a standard Next.js App Router structure.
 │   │   └── use-mobile.ts       # Custom hook to detect mobile viewports
 │   │
 │   ├── lib/
-│   │   ├── constants.ts        # Centralized static data (services, testimonials, FAQs)
+│   │   ├── content.json        # Centralized JSON file for all website content
+│   │   ├── constants.ts        # Maps icon strings from content.json to components
 │   │   └── utils.ts            # Utility functions (e.g., `cn` for classnames)
 │   │
 │   └── ai/
@@ -97,18 +99,20 @@ The project follows a standard Next.js App Router structure.
 
 ## 6. Content Management
 
-All static content for the website is managed centrally in `src/lib/constants.ts`. This includes:
--   **`NAV_LINKS`**: Navigation links for the header.
--   **`TEAM_MEMBERS`**: Information about Dr. Anurag Srivastava.
--   **`SERVICES`**: A detailed array of all medical services. This is the single source of truth for the services section and the dynamic service pages.
--   **`TESTIMONIALS`**: A list of patient quotes.
--   **`FAQS`**: An array of frequently asked questions and their answers.
+All static content for the website is managed centrally in **`src/lib/content.json`**. This includes navigation links, service details, testimonials, FAQs, and all text content used across the site's pages and components. This centralized approach makes it easy to update content without searching through multiple component files.
 
-This centralized approach makes it easy to update content without searching through multiple component files.
+The `src/lib/constants.ts` file works alongside `content.json`. Since React components (like icons) cannot be stored in JSON, `constants.ts` imports the icon components from `lucide-react` and provides a mapping. The application code uses this mapping to dynamically render the correct icon based on the string name provided in `content.json`.
 
-## 7. Future Development Opportunities
+## 7. SEO & Performance
 
--   **AI-Powered FAQ**: Implement a Genkit-powered chatbot to answer patient questions in real-time based on the `FAQS` and `SERVICES` data.
+- **Dynamic Metadata**: Page titles and descriptions are dynamically generated for each service and the doctor's profile page, ensuring relevance for search engines.
+- **Structured Data**: The "About" section includes `MedicalBusiness` and `Physician` schema.org structured data (JSON-LD) to enhance local SEO and provide rich search results.
+- **Smooth Scrolling**: Implemented via global CSS for a better user experience when navigating anchor links.
+- **Animations**: Subtle "fade-in" animations are used on page sections to provide a modern feel as the user scrolls.
+
+## 8. Future Development Opportunities
+
+-   **AI-Powered FAQ**: Implement a Genkit-powered chatbot to answer patient questions in real-time based on the `content.json` data.
 -   **Blog/Health Articles**: Add a blog section where Dr. Srivastava can post health tips and articles, improving SEO and patient engagement.
 -   **Online Payments**: Integrate a payment gateway for consultation fees.
 -   **Patient Portal**: A secure area for patients to view their appointment history or medical records.
