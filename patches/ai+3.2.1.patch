@@ -1,0 +1,28 @@
+diff --git a/node_modules/ai/rsc/dist/rsc-client.mjs b/node_modules/ai/rsc/dist/rsc-client.mjs
+index 9e925c48b76c8928c049d7c07f4337bce4e1a0b3..610b64d852cc5de8e6c51ba44558225e5bde8b68 100644
+--- a/node_modules/ai/rsc/dist/rsc-client.mjs
++++ b/node_modules/ai/rsc/dist/rsc-client.mjs
+@@ -10,7 +10,7 @@ import {
+   useState,
+   useTransition
+ } from "react";
+-var SYNC_STATE_EVENT = "ai.sync";
++var SYNC_STATE_EVENT = "ai.syncData";
+ var NEXT_DATA_PORTAL_ID = "__next_data_port_id__";
+ var createStreamableUI = () => {
+   let stream = new ReadableStream({
+diff --git a/node_modules/ai/rsc/package.json b/node_modules/ai/rsc/package.json
+index d92657e2d7830f5761dd2675a5e317c2f6d50692..2e8f1997d983411b7ef3c48039d57a2e873b75a1 100644
+--- a/node_modules/ai/rsc/package.json
++++ b/node_modules/ai/rsc/package.json
+@@ -4,6 +4,9 @@
+   "types": "./dist/rsc-server.d.ts",
+   "files": [
+     "dist"
++  ],
++  "exports": {
++    "./package.json": "./package.json",
++    ".": "./dist/rsc-server.mjs"
+   }
+ }
+-

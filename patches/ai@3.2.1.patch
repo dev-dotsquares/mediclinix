@@ -1,0 +1,33 @@
+diff --git a/node_modules/ai/package.json b/node_modules/ai/package.json
+index 542a20e..9905d43 100644
+--- a/node_modules/ai/package.json
++++ b/node_modules/ai/package.json
+@@ -93,6 +93,12 @@
+       "types": "./dist/index.d.ts",
+       "default": "./dist/index.js"
+     },
++    "./rsc": {
++      "react-server": "./rsc/dist/rsc-server.mjs",
++      "import": "./rsc/dist/rsc-client.mjs",
++      "require": "./rsc/dist/rsc-client.js",
++      "types": "./rsc/dist/rsc.d.ts"
++    },
+     "./react": {
+       "import": "./dist/react.mjs",
+       "require": "./dist/react.js",
+diff --git a/node_modules/ai/rsc/package.json b/node_modules/ai/rsc/package.json
+index 923d6a4..36612d4 100644
+--- a/node_modules/ai/rsc/package.json
++++ b/node_modules/ai/rsc/package.json
+@@ -1,10 +1,3 @@
+ {
+-  "name": "ai/rsc",
+-  "private": true,
+-  "main": "dist/rsc-client.js",
+-  "module": "dist/rsc-client.mjs",
+-  "types": "dist/rsc.d.ts",
+-  "exports": {
+-    "react-server": "./dist/rsc-server.mjs"
+-  }
++  "name": "ai/rsc"
+ }
