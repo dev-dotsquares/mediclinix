@@ -1,6 +1,6 @@
 'use client';
 
-import { SERVICES, type Service } from '@/lib/constants';
+import { SERVICES, ICONS } from '@/lib/constants';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -20,11 +20,11 @@ export default function ServiceDetailPageClient({ slug }: ServiceDetailPageClien
   const service = SERVICES.find(s => s.slug === slug);
 
   if (!service) {
-    // This will show the 404 page if the service is not found on the client side.
     notFound();
   }
+
+  const ServiceIcon = service.icon;
   
-  // Helper to render sections which can be a string or an object with title and content
   const renderSection = (section: any, index: number) => {
     if (typeof section === 'string') {
       return <p key={index} className="text-foreground/80 leading-relaxed">{section}</p>;
@@ -40,7 +40,6 @@ export default function ServiceDetailPageClient({ slug }: ServiceDetailPageClien
     return null;
   };
   
-  // Helper to render lists
   const renderList = (items: string[] | undefined) => {
     if (!items || items.length === 0) return null;
     return (
@@ -74,7 +73,7 @@ export default function ServiceDetailPageClient({ slug }: ServiceDetailPageClien
             <CardHeader className="text-center">
               <div className="flex justify-center items-center mb-4">
                   <div className="p-4 bg-primary/10 rounded-full text-primary">
-                      <service.icon className="h-10 w-10" />
+                      <ServiceIcon className="h-10 w-10" />
                   </div>
               </div>
               <CardTitle className="text-3xl md:text-4xl font-bold font-headline text-primary">

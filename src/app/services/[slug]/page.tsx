@@ -1,19 +1,20 @@
-import { SERVICES } from "@/lib/constants";
-import { notFound } from "next/navigation";
-import ServiceDetailPageClient from "@/components/service-detail-page";
-import type { Metadata } from "next";
+import { SERVICES } from '@/lib/constants';
+import { notFound } from 'next/navigation';
+import ServiceDetailPageClient from '@/components/service-detail-page';
+import type { Metadata } from 'next';
+import content from '@/lib/content.json';
 
 type Props = {
   params: { slug: string };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const service = SERVICES.find((s) => s.slug === params.slug);
+  const service = content.services.find(s => s.slug === params.slug);
 
   if (!service) {
     return {
-      title: "Service Not Found",
-      description: "The requested service is not available.",
+      title: 'Service Not Found',
+      description: 'The requested service is not available.',
     };
   }
 
@@ -23,12 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ServiceDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const service = SERVICES.find((s) => s.slug === params.slug);
+
+export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
+  const service = content.services.find(s => s.slug === params.slug);
 
   if (!service) {
     notFound();
@@ -41,7 +39,7 @@ export default function ServiceDetailPage({
 
 // This function is needed for Next.js to know which service pages to generate at build time.
 export function generateStaticParams() {
-  return SERVICES.map((service) => ({
+  return content.services.map((service) => ({
     slug: service.slug,
   }));
 }

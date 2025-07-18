@@ -2,8 +2,9 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TEAM_MEMBERS, TESTIMONIALS } from '@/lib/constants';
-import { BadgeCheck, HeartHandshake, Lightbulb, Users } from 'lucide-react';
+import { TESTIMONIALS } from '@/lib/constants';
+import content from '@/lib/content.json';
+import { BadgeCheck, HeartHandshake, Lightbulb } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Link from 'next/link';
 import Autoplay from "embla-carousel-autoplay";
@@ -20,7 +21,7 @@ export default function AboutSection() {
     { name: 'Lifestyle & Diet Counseling', icon: Lightbulb },
   ];
 
-  const doctor = TEAM_MEMBERS[0];
+  const doctor = content.teamMembers[0];
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -94,7 +95,7 @@ export default function AboutSection() {
                     <CardTitle className="text-2xl font-bold font-headline text-center">Meet Our Doctor</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-8">
-                    {TEAM_MEMBERS.map((member, index) => (
+                    {content.teamMembers.map((member, index) => (
                       <div key={index} className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                         <Image
                           src={member.image}

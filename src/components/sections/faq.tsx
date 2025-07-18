@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FAQS } from '@/lib/constants';
+import content from '@/lib/content.json';
 
 export default function FaqSection() {
   return (
@@ -24,7 +24,7 @@ export default function FaqSection() {
           <Card className="shadow-lg animate-fade-in-up delay-200">
             <CardContent className="p-6">
               <Accordion type="single" collapsible className="w-full">
-                {FAQS.map((faq, index) => (
+                {content.faqs.map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`}>
                     <AccordionTrigger className="text-left font-semibold hover:no-underline">
                       {faq.question}

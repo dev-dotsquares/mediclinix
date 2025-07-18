@@ -75,21 +75,19 @@ export default function Header({ onBookAppointment }: HeaderProps) {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full max-w-xs bg-card p-0 flex flex-col">
-                <SheetHeader className="p-6 pb-4">
-                    <SheetTitle>
-                        <VisuallyHidden>Mobile Menu</VisuallyHidden>
-                    </SheetTitle>
-                     <div className="flex items-center justify-between">
-                       <a href="#home" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                        <Logo />
-                      </a>
-                      <SheetTrigger asChild>
-                         <Button variant="ghost" size="icon" className="-mr-2">
-                          <X className="h-6 w-6" />
-                          <span className="sr-only">Close menu</span>
-                        </Button>
-                      </SheetTrigger>
-                    </div>
+                <SheetHeader className="p-6 pb-4 flex flex-row items-center justify-between">
+                  <a href="#home" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Logo />
+                  </a>
+                  <SheetTitle>
+                      <VisuallyHidden>Mobile Menu</VisuallyHidden>
+                  </SheetTitle>
+                  <SheetTrigger asChild>
+                      <Button variant="ghost" size="icon" className="-mr-2">
+                        <X className="h-6 w-6" />
+                        <span className="sr-only">Close menu</span>
+                      </Button>
+                  </SheetTrigger>
                 </SheetHeader>
                 <div className="flex flex-col h-full p-6 pt-0">
                   <nav className="flex flex-col gap-6 text-lg">

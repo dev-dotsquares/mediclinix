@@ -1,8 +1,6 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SERVICES } from '@/lib/constants';
-import { ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
@@ -57,18 +55,6 @@ export default function ServicesSection({ onBookAppointment }: ServicesSectionPr
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-
-          <div className="text-center max-w-3xl mx-auto mt-16">
-            <Card className="bg-card shadow-lg inline-block">
-              <CardContent className="p-6 flex flex-col sm:flex-row items-center gap-4">
-                <ShieldCheck className="h-8 w-8 text-primary" />
-                <div>
-                  <h3 className="font-bold text-left">Modern Diagnostic Support</h3>
-                  <p className="text-muted-foreground text-sm text-left">Blood sugar profiling, HbA1c, lipid monitoring, kidney function tests – all under one roof.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </section>
     </>

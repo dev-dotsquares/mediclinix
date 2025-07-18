@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, MapPin, Phone, Clock } from "lucide-react"
+import content from '@/lib/content.json';
 
 export default function ContactSection() {
+  const contactContent = content.contactSection;
   const mapUrl = "https://maps.google.com/maps?q=26.807712385871,75.87077347040909&z=15&output=embed";
 
   return (
@@ -13,10 +15,10 @@ export default function ContactSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold font-headline">
-            Get In Touch
+            {contactContent.title}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            We&apos;re here to help. Reach out to us with any questions or to schedule an appointment.
+            {contactContent.subtitle}
           </p>
         </div>
 
@@ -24,36 +26,37 @@ export default function ContactSection() {
           <div className="space-y-8">
             <Card className="shadow-lg animate-fade-in-up delay-200">
               <CardHeader>
-                <CardTitle className="font-headline">Contact Information</CardTitle>
+                <CardTitle className="font-headline">{contactContent.infoCard.title}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 text-foreground/80">
                 <div className="flex items-start gap-4">
                   <MapPin className="h-6 w-6 text-primary mt-1" />
                   <div>
-                    <h3 className="font-semibold">Address</h3>
-                    <p>MEDICLINIX – Diabetes & Lifestyle Clinic, Shop No. 17, Jagatpura, Jaipur</p>
+                    <h3 className="font-semibold">{contactContent.infoCard.address.label}</h3>
+                    <p>{contactContent.infoCard.address.value}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Phone className="h-6 w-6 text-primary mt-1" />
                   <div>
-                    <h3 className="font-semibold">Phone</h3>
-                    <a href="tel:8505000755" className="hover:text-primary">8505000755</a>
+                    <h3 className="font-semibold">{contactContent.infoCard.phone.label}</h3>
+                    <a href={`tel:${contactContent.infoCard.phone.value}`} className="hover:text-primary">{contactContent.infoCard.phone.value}</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Mail className="h-6 w-6 text-primary mt-1" />
                   <div>
-                    <h3 className="font-semibold">Email</h3>
-                    <a href="mailto:contact@healthhub.com" className="hover:text-primary">contact@mediclinix.com</a>
+                    <h3 className="font-semibold">{contactContent.infoCard.email.label}</h3>
+                    <a href={`mailto:${contactContent.infoCard.email.value}`} className="hover:text-primary">{contactContent.infoCard.email.value}</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Clock className="h-6 w-6 text-primary mt-1" />
                   <div>
-                    <h3 className="font-semibold">Operating Hours</h3>
-                    <p>Mon - Sat: 6:00 PM - 8:00 PM</p>
-                    <p>Sat - Sun: 10:00 AM - 12:00 PM</p>
+                    <h3 className="font-semibold">{contactContent.infoCard.hours.label}</h3>
+                    {contactContent.infoCard.hours.value.map((line, index) => (
+                      <p key={index}>{line}</p>
+                    ))}
                   </div>
                 </div>
               </CardContent>
@@ -61,7 +64,7 @@ export default function ContactSection() {
 
              <Card className="shadow-lg animate-fade-in-up delay-400">
               <CardHeader>
-                <CardTitle className="font-headline">Location</CardTitle>
+                <CardTitle className="font-headline">{contactContent.locationCard.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="aspect-video rounded-lg overflow-hidden">
@@ -84,27 +87,27 @@ export default function ContactSection() {
           <div>
             <Card className="shadow-lg animate-fade-in-up delay-600">
               <CardHeader>
-                <CardTitle className="font-headline">Contact Form</CardTitle>
+                <CardTitle className="font-headline">{contactContent.formCard.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <form className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Your Name" />
+                    <Label htmlFor="name">{contactContent.formCard.fields.name.label}</Label>
+                    <Input id="name" placeholder={contactContent.formCard.fields.name.placeholder} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="your@email.com" />
+                    <Label htmlFor="email">{contactContent.formCard.fields.email.label}</Label>
+                    <Input id="email" type="email" placeholder={contactContent.formCard.fields.email.placeholder} />
                   </div>
                    <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="Your Phone Number" />
+                    <Label htmlFor="phone">{contactContent.formCard.fields.phone.label}</Label>
+                    <Input id="phone" type="tel" placeholder={contactContent.formCard.fields.phone.placeholder} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea id="message" placeholder="Your message..." />
+                    <Label htmlFor="message">{contactContent.formCard.fields.message.label}</Label>
+                    <Textarea id="message" placeholder={contactContent.formCard.fields.message.placeholder} />
                   </div>
-                  <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">Send Message</Button>
+                  <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">{contactContent.formCard.submitButtonText}</Button>
                 </form>
               </CardContent>
             </Card>

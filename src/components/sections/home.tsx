@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CalendarPlus, Stethoscope, Users } from 'lucide-react';
+import { CalendarPlus } from 'lucide-react';
 import Image from 'next/image';
 
 interface HomeSectionProps {

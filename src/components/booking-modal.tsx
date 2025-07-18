@@ -26,7 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Loader2 } from 'lucide-react';
-import { SERVICES } from '@/lib/constants';
+import content from '@/lib/content.json';
 import { useToast } from '@/hooks/use-toast';
 
 interface BookingModalProps {
@@ -40,6 +40,7 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
   const [selectedService, setSelectedService] = useState(defaultService);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const bookingContent = content.bookingModal;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,15 +76,14 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
     };
 
     try {
-      // Use Promise.all to send both emails concurrently
       await Promise.all([
         emailjs.send(serviceId, templateId, doctorEmailDetails, publicKey),
         emailjs.send(serviceId, templateId, userEmailDetails, publicKey)
       ]);
 
       toast({
-        title: "Appointment Requested Successfully",
-        description: "We've received your request and sent a confirmation to your email. We will be in touch shortly.",
+        title: bookingContent.success.title,
+        description: bookingContent.success.description,
       });
       onOpenChange(false);
 
@@ -91,8 +91,8 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
       console.error('Email sending failed:', error);
       toast({
         variant: "destructive",
-        title: "Oh no! Something went wrong.",
-        description: "There was a problem sending your appointment request. Please try again or contact us directly.",
+        title: bookingContent.error.title,
+        description: bookingContent.error.description,
       });
     } finally {
       setIsLoading(false);
@@ -103,35 +103,35 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <DialogTitle className="font-headline text-2xl">Book an Appointment</DialogTitle>
+          <DialogTitle className="font-headline text-2xl">{bookingContent.title}</DialogTitle>
           <DialogDescription>
-            Fill out the form below to request an appointment. We will contact you to confirm.
+            {bookingContent.description}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
-                Name
+                {bookingContent.fields.name.label}
               </Label>
-              <Input id="name" name="name" placeholder="John Doe" className="col-span-3" required />
+              <Input id="name" name="name" placeholder={bookingContent.fields.name.placeholder} className="col-span-3" required />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="email" className="text-right">
-                Email
+                {bookingContent.fields.email.label}
               </Label>
-              <Input id="email" name="email" type="email" placeholder="john.doe@example.com" className="col-span-3" required />
+              <Input id="email" name="email" type="email" placeholder={bookingContent.fields.email.placeholder} className="col-span-3" required />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="service" className="text-right">
-                Service
+                {bookingContent.fields.service.label}
               </Label>
               <Select name="service" value={selectedService} onValueChange={setSelectedService}>
                 <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select a service" />
+                  <SelectValue placeholder={bookingContent.fields.service.placeholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  {SERVICES.map((service) => (
+                  {content.services.map((service) => (
                     <SelectItem key={service.name} value={service.name}>
                       {service.name}
                     </SelectItem>
@@ -141,7 +141,7 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="date" className="text-right">
-                Date
+                {bookingContent.fields.date.label}
               </Label>
               <Popover>
                 <PopoverTrigger asChild>
@@ -153,7 +153,7 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, 'PPP') : <span>Pick a date</span>}
+                    {date ? format(date, 'PPP') : <span>{bookingContent.fields.date.placeholder}</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -169,12 +169,12 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="reason" className="text-right pt-2">
-                Reason
+                {bookingContent.fields.reason.label}
               </Label>
               <Textarea
                 id="reason"
                 name="reason"
-                placeholder="Briefly describe the reason for your visit"
+                placeholder={bookingContent.fields.reason.placeholder}
                 className="col-span-3"
               />
             </div>
@@ -182,7 +182,7 @@ export default function BookingModal({ isOpen, onOpenChange, defaultService }: B
           <DialogFooter>
             <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Request Appointment
+              {bookingContent.submitButtonText}
             </Button>
           </DialogFooter>
         </form>
